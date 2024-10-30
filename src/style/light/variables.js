@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Wed, 30 Oct 2024 07:45:37 GMT
+ * Generated on Wed, 30 Oct 2024 08:00:47 GMT
  */
 
 export const FgDefault = "#000000";
