@@ -1,0 +1,65 @@
+name: Transform Tokens
+ 
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - token.json
+ 
+jobs:
+  transform-tokens:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+ 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+ 
+      - name: Install dependencies
+        run: npm install
+ 
+      - name: Install token-transformer
+        run: npm install token-transformer
+ 
+      - name: Run Token Seperater
+        run: |
+            node tt.config.js
+        env:
+            GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+ 
+      - name: Run Token Transformer
+        run: |
+            node style.dictionary.config.js
+        env:
+            GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+ 
+      - name: Check for changes
+        run: |
+          if git diff --exit-code; then
+            echo "No changes detected";
+            exit 0;
+          fi
+ 
+      - name: Commit changes
+        run: |
+          git config --global user.name "SeonnDahye"
+          git config --global user.email "sdh@hconnect.co.kr"
+          git add .
+          git commit -m 'Figma updated styles'
+          git push
+ 
+ 
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          commit-message: Transform tokens and update styles
+          branch: transform-tokens-branch
+          title: "Transform tokens and update styles"
+          body: "This PR transforms tokens and updates styles automatically."
+          base: main
