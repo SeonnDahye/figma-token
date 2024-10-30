@@ -1,5 +1,7 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import { css, styled } from "styled-components";
+import { ColoredText } from "./App.style";
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
         >
           Learn React
         </a>
+        <ColoredText>Test!!!!!</ColoredText>
       </header>
     </div>
   );
