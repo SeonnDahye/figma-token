@@ -25,6 +25,9 @@ jobs:
  
       - name: Install token-transformer
         run: npm install token-transformer
+
+      - name: Install style-dictionary
+        run: npm install style-dictionary@3.8.0
  
       - name: Run Token Seperater
         run: |
